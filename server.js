@@ -5,6 +5,7 @@ const cors = require("cors");
 const loginMiddleware = require("./middlewares/loginMiddleware.js");
 const uploadMedia = require("./routes/uploadMedia.js");
 const mediaLink = require("./routes/shortUrl.js");
+const collectionLink = require("./routes/collectionRoutes.js");
 dotenv.config();
 
 // Connect mongoose to database
@@ -22,6 +23,7 @@ app.use(cors());
 app.use("/api", loginMiddleware);
 app.use("/api", uploadMedia);
 app.use("/api", mediaLink);
+app.use("/api", collectionLink);
 
 const port = process.env.PORT || 5000;
 

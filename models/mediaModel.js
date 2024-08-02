@@ -7,7 +7,7 @@ const mediaSchema = new mongoose.Schema({
     required: true,
   },
   url: {
-    type: String,
+    type: Array,
     required: true,
   },
   createdAt: {
@@ -16,8 +16,13 @@ const mediaSchema = new mongoose.Schema({
   },
   shortUrl: {
     type: String,
-  }
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Media = mongoose.model("Media", mediaSchema);
+
 module.exports = Media;
