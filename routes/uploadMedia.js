@@ -4,31 +4,34 @@ const upload = require("../middlewares/mediaMiddleware.js");
 const Media = require("../models/mediaModel.js");
 const axios = require("axios");
 
-router.post("/media", upload.array("files", 5), async (req, res) => {
+router.post("/media", upload.single("files"), async (req, res) => {
   try {
+    console.log(req.file);
+    console.log(req);
     const media = new Media();
     media.title = req.body.title;
     media.price = req.body.price;
     media.url = [];
-    req.files.forEach((file) => {
-      media.url.push(file.location);
-    });
-    // media.url = req.file.location;
+    // req.files.forEach((file) => {
+    //   media.url.push(file.location);
+    // });
+    media.url = req.file.location;
     await axios
       .post("http://localhost:5000/api/url", {
         url: media.url[0],
       })
       .then((res) => {
-        console.log(res.data.id);
+        // console.log(res.data.id);
         media.shortUrl = `http://localhost:5000/api/${res.data.id}`;
       })
       .catch((err) => {
         console.error(err);
       });
-      console.log(media.shortUrl);
+      // console.log(media.shortUrl);
     const savedMedia = await media.save();
     res.json({
       message: "Media Uploaded Successfully",
+      link: savedMedia.shortUrl,
       media: savedMedia,
     });
   } catch (e) {

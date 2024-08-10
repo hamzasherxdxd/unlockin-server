@@ -19,7 +19,7 @@ async function getRedirectUrl(req, res) {
   const entry = await URL.findOne({
     shortId,
   });
-  console.log(entry);
+  console.log("ENTRY: " + entry);
   res.redirect(`${entry.redirectUrl}`);
 }
 
